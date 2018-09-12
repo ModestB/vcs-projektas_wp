@@ -363,6 +363,9 @@ label:focus,
   -webkit-appearance: none;
 }
 
+/* ========================================================================== */
+/* SCSS VERIABLES */
+/* ========================================================================== */
 /* ICOMOON icons */
 @font-face {
   font-family: 'icomoon';
@@ -503,9 +506,20 @@ label:focus,
   content: "\e923";
 }
 
-/* ========================================================================== */
-/* SCSS VERIABLES */
-/* ========================================================================== */
+.icon-circle-up:before {
+  content: "\ea41";
+  font-size: 2.5rem;
+  color: #2ecc71;
+}
+
+.icon-twitter:before {
+  content: "\ea96";
+}
+
+.icon-github:before {
+  content: "\eab0";
+}
+
 /* ========================================================================== */
 /* GLOBAL */
 /* ========================================================================== */
@@ -609,6 +623,14 @@ p {
 /* ========================================================================== */
 /* LANDING PAGE + NAV START */
 /* ========================================================================== */
+.button-top {
+  position: fixed;
+  display: none;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
 header {
   background-color: #000;
 }
@@ -981,7 +1003,7 @@ nav a:hover {
 .year.flex-container {
   margin: 0 auto;
   background-color: #2ecc71;
-  max-width: 200px;
+  max-width: 250px;
   max-height: 50px;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -1119,7 +1141,7 @@ blockquote p {
 
 .card__container {
   max-height: 400px;
-  width: 344px;
+  width: 346px;
   margin: 1rem;
 }
 
@@ -1130,16 +1152,15 @@ blockquote p {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-transition: ease-in-out 0.5s;
-  -o-transition: ease-in-out 0.5s;
-  transition: ease-in-out 0.5s;
+  -webkit-transition: ease-in-out 0.4s;
+  -o-transition: ease-in-out 0.4s;
+  transition: ease-in-out 0.4s;
 }
 
 .card__container .card__text h2 {
   font-size: 1.5rem;
-  padding: 0 1rem;
   font-weight: 400;
-  margin-bottom: 1rem;
+  color: #000;
 }
 
 .card__container .card__text p {
@@ -1172,7 +1193,6 @@ blockquote p {
   line-height: 40px;
   padding: 0 0.5rem;
   color: #000;
-  border-left: 1px solid #E0E0E0;
 }
 
 .card__container .card__actionbar .card__button:hover {
@@ -1180,8 +1200,9 @@ blockquote p {
 }
 
 .card__body:hover {
-  -webkit-transform: translate3d(0, -5px, 0);
-  transform: translate3d(0, -5px, 0);
+  -webkit-transform: translateY(-5px);
+  -ms-transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .card__subtitle.flex-container {
@@ -1207,7 +1228,8 @@ footer .container {
 }
 
 .contact {
-  margin-top: 6.8rem;
+  margin-top: 3.4rem;
+  margin-left: 0.625rem;
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -1243,6 +1265,11 @@ footer .container {
   margin-bottom: 2rem;
 }
 
+.contact .contact__details iframe {
+  margin-top: 2rem;
+  width: 80%;
+}
+
 footer h3 {
   margin-top: 6.8rem;
 }
@@ -1256,7 +1283,7 @@ footer h3 {
   /* IE 10+ */
 }
 
-.send-mail form .flex-container {
+.send-mail .flex-container {
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -1385,6 +1412,35 @@ footer h3 {
   color: transparent;
 }
 
+.send-mail .wpcf7 {
+  width: 100%;
+}
+
+.send-mail span.wpcf7-not-valid-tip {
+  text-align: right;
+}
+
+.send-mail div.wpcf7-mail-sent-ok {
+  border: none;
+  border-bottom: 2px solid #2ecc71;
+  color: #2ecc71;
+}
+
+.send-mail div.wpcf7-mail-sent-ng,
+.send-mail div.wpcf7-aborted,
+.send-mail div.wpcf7-validation-errors,
+.send-mail div.wpcf7-acceptance-missing {
+  margin-top: 2rem;
+  border: none;
+  border-bottom: 2px solid red;
+  color: red;
+  width: 100%;
+}
+
+.send-mail form label {
+  text-align: left;
+}
+
 .copyright {
   margin: 3.4rem 0;
 }
@@ -1414,29 +1470,27 @@ footer h3 {
   .hamburger-box {
     display: block;
   }
-  nav {
-    display: none;
-  }
   .responsive {
     margin-top: 4.5rem;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    height: 0;
-    width: 0;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
+    max-height: 0;
+    overflow: hidden;
+    width: 200px;
+    transition: max-height 0.8s;
+    -webkit-transition: max-height 0.8s;
+    -moz-transition: max-height 0.8s;
+    -o-transition: max-height 0.8s;
+    -ms-transition: max-height 0.8s;
   }
   .responsive ul {
     display: -webkit-box;
@@ -1485,9 +1539,8 @@ footer h3 {
     border-bottom: none;
     color: #000;
   }
-  .responsive__active {
-    height: auto;
-    width: 200px;
+  .responsive.responsive__active {
+    max-height: 400px;
   }
   .hero {
     margin-top: 4.5rem;
@@ -1589,16 +1642,13 @@ footer h3 {
   .latest-blog .card-main h3, .latest-blog .card-main p {
     text-align: center;
   }
-  .latest-blog .card__container:hover {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
   .latest-blog .card__body p {
     margin-bottom: 0;
   }
   .latest-blog .card__body:hover {
-    -webkit-transform: translate3d(0, 0px, 0);
-    transform: translate3d(0, 0px, 0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
   }
   /* CONTACT*/
   .contact .send-mail {
@@ -1622,6 +1672,9 @@ footer h3 {
   }
 }
 
+/* ========================================================================== */
+/* LESST THEN 479px */
+/* ========================================================================== */
 @media screen and (max-width: 479px) {
   .container, .timeline, .separation {
     min-width: 360px;
@@ -1644,9 +1697,6 @@ footer h3 {
 }
 
 @media screen and (min-width: 768px) {
-  /* ========================================================================== */
-  /* RESUME */
-  /* ========================================================================== */
   .resume {
     /* RESUME SECTION END */
   }

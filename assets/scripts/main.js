@@ -1,19 +1,23 @@
 'use strict';
+
 //On scroll adds class sticky background to element with ID #header
 //const navbar = document.querySelector('#header');
 //const sticky = navbar.offsetHeight;
-
-const addSticky = () => {
-    const navbar = document.querySelector('#header');
-    const sticky = navbar.offsetHeight;
-
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset >= sticky) { 
-            navbar.classList.add("sticky-background")
-        } else {
-            navbar.classList.remove("sticky-background");       
-        }; 
-    });
+function addSticky()  {
+    try {
+        const navbar = document.querySelector('#header');
+        const sticky = navbar.offsetHeight;
+    
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset >= sticky) { 
+                navbar.classList.add("sticky-background");
+            } else {
+                navbar.classList.remove("sticky-background");       
+            }; 
+        }); 
+    } catch (error) {
+        
+    };
 };
 
 
@@ -55,7 +59,7 @@ function currentYPosition() {
 // RETURN elements with eID y position
 // =============================================================================
 function elmYPosition(eID) {
-    const elm = document.querySelector(eID);
+    const elm = document.querySelector(eID);  
     let y = elm.offsetTop;
     let node = elm;
     while (node.offsetParent && node.offsetParent != document.body) {
@@ -113,7 +117,7 @@ function smoothScroll(eID) {
 };
 
 // ADD window scroll event listener
-// DETERMINE section top 'coordinate' - 120 (section top Y)
+// DETERMINE section top 'coordinate' - 150 (section top Y)
 // DETERMINE section heigth
 // DETERMINE currentY
 // IF currentY is below sectionTop Y AND currentY above sectionBottom Y (sectionTop + sectionHeight)
@@ -121,18 +125,15 @@ function smoothScroll(eID) {
 // ELSE remove
 function activeClass(sectionId, navElement){
     const sectionEle = document.querySelector(sectionId);
+    const sectionTop = sectionEle.offsetTop - 150;
+    const sectionHeight = sectionEle.offsetHeight;
+    const currentY = currentYPosition();
 
-    window.addEventListener('scroll', () => {
-        const sectionTop = sectionEle.offsetTop - 120;
-        const sectionHeight = sectionEle.offsetHeight;
-        const currentY = currentYPosition();
-
-        if(currentY >= sectionTop && currentY < (sectionTop + sectionHeight)){
-            navElement.classList.add('active');
-        } else {
-            navElement.classList.remove('active');
-        };
-    });
+    if(currentY >= sectionTop && currentY < (sectionTop + sectionHeight)){
+        navElement.classList.add('active'); 
+    } else {
+        navElement.classList.remove('active');
+    };
 };
 
 // =============================================================================
@@ -143,14 +144,18 @@ function activeClass(sectionId, navElement){
 // ADD activeClass
 // =============================================================================
 function addActionOnScroll(){
-    const elements = document.querySelectorAll("nav a");
+    const elements = document.querySelectorAll("nav a, .hero a");
     elements.forEach((element) => {
         let eID = element.getAttribute('href');
-        element.addEventListener("click", (event) =>{
-            event.preventDefault();
-            smoothScroll(eID); 
-        });
-        activeClass(eID, element);
+        if(eID[0] == '#') {
+            element.addEventListener("click", (event) =>{
+                event.preventDefault();
+                smoothScroll(eID);              
+            });
+            window.addEventListener('scroll', () => {
+                activeClass(eID, element);                         
+            });
+        };
     });
 };
 
@@ -158,38 +163,68 @@ function addActionOnScroll(){
 //BURGER
 function responsiveMenu(){
     const nav = document.querySelector("nav");
-    const burgerIcon = document.querySelector(".hamburger")
-    nav.classList.add('responsive');
-    
+    try {
+        const burgerIcon = document.querySelector(".hamburger");
+        nav.classList.add('responsive');
 
-    burgerIcon.addEventListener('click', (event) => {
-        event.preventDefault();
-        nav.classList.toggle('responsive__active');
-        burgerIcon.classList.toggle('is-active');
-    });
-    window.addEventListener('scroll', () => {
-        nav.classList.remove('responsive__active');
-        burgerIcon.classList.remove('is-active');
-    });
-    window.addEventListener('resize', () => {
-        nav.classList.remove('responsive__active');
-        burgerIcon.classList.remove('is-active');
+        burgerIcon.addEventListener('click', (event) => {
+            event.preventDefault();
+            nav.classList.toggle('responsive__active');
+            burgerIcon.classList.toggle('is-active');
+        });
+        window.addEventListener('scroll', () => {
+            nav.classList.remove('responsive__active');
+            burgerIcon.classList.remove('is-active');
+        });
+        window.addEventListener('resize', () => {
+            nav.classList.remove('responsive__active');
+            burgerIcon.classList.remove('is-active');
+        });
+    } catch (error) {
+        
+    };
+};
+
+// FIND selectors innerHTML text
+// CHECK if it's longer than charAmount
+// TRUE cut to charAmount add ... on the end
+// CHANGE .card__text p innerHTML to updated value
+function cardTextAdjust(selector, charAmount) {
+    const textElArr = document.querySelectorAll(selector);
+    textElArr.forEach((textEl) => {
+        let text = textEl.innerHTML;
+        if(text.length > charAmount){
+            textEl.innerHTML = `${text.substring(0, charAmount)}...`    
+        };   
     });
 };
 
-
-// FIND .card__text p innerHTML text
-// CHECK if it's longer than 80 characters
-// TRUE cut to 80 characters add ... on the end
-// CHANGE .card__text p innerHTML to updated value
-function cardTextAdjust() {
-    const textElArr = document.querySelectorAll(".card__text p");
-    textElArr.forEach((textEl) => {
-        let text = textEl.innerHTML;
-        if(text.length > 80){
-            textEl.innerHTML = `${text.substring(0, 80)}...`    
-        };   
-    });
+// FIND upButton by class name
+// GET topElement to scroll to
+// GET topElement block height
+// CHECK if currentY position ir greater than topElement Height
+// TRUE display icon
+// ELSE not display
+// ADD smooth scrolling on upButton
+function addUpButton(){
+    try {
+        const upButton = document.querySelector(".button-top");
+        const topElement = document.querySelector('header');
+        const topElemeHeight =  topElement.offsetHeight;
+        window.addEventListener('scroll', () => {
+            let currentY = currentYPosition();
+            if(currentY > topElemeHeight){
+                upButton.style.display = "block";
+            } else {
+                upButton.style.display = "none";
+            };
+        });
+        upButton.addEventListener("click", () =>{
+            smoothScroll('header'); 
+        });
+    } catch (error) {
+        
+    };
 };
 
 // =============================================================================
@@ -214,20 +249,15 @@ function initializeSwiper(){
     });
 };
 
-
-function particleLoad() {
-     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-    particlesJS.load('particles-js', 'wp-content/themes/vcs-starter/assets/scripts/particle/particles.json');
-};
-
 // =============================================================================
 // FUNCTION CALLS
 // =============================================================================
-    particleLoad();
     addActionOnScroll();
     responsiveMenu();
     addSticky();
     progressBarLoader();
-    cardTextAdjust();
+    cardTextAdjust('.card__text p', 80);
+    cardTextAdjust('.card__text a h2', 25);
     initializeSwiper();
+    addUpButton();
 
