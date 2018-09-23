@@ -12,3 +12,5 @@ Used WordPress plugins:
  - Widget CSS Classes
  - Yoast SEO
  - WP Migrate DB
+
+https://mbprojektas1.000webhostapp.com/
